@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<!-- saved from url=(0093)https://page.genspark.site/page/toolu_01LLH6kMLgfSK7BjNTvQ1P49/pathophysiology_mock_exam.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pathophysiology Final Exam Mock Test</title>
+    <link href="./Pathophysiology Final Exam Mock Test_files/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./Pathophysiology Final Exam Mock Test_files/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9fafb;
+            color: #1f2937;
+        }
+        .question-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+        .options label {
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            background-color: #f3f4f6;
+            transition: all 0.2s;
+        }
+        .options label:hover {
+            background-color: #e5e7eb;
+        }
+        .hint-content {
+            display: none;
+            background-color: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+        .correct-answer {
+            background-color: #d1fae5 !important;
+            border-left: 4px solid #10b981;
+        }
+        .incorrect-answer {
+            background-color: #fee2e2 !important;
+            border-left: 4px solid #ef4444;
+        }
+        .btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #2563eb;
+        }
+        .btn-secondary {
+            background-color: #9ca3af;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #6b7280;
+        }
+        .btn-hint {
+            background-color: #f59e0b;
+            color: white;
+        }
+        .btn-hint:hover {
+            background-color: #d97706;
+        }
+        .progress-bar {
+            height: 8px;
+            background-color: #e5e7eb;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .progress {
+            height: 100%;
+            background-color: #3b82f6;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        .results-card {
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .study-recommendation {
+            background-color: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+         {
+            .no-print {
+                display: none;
+            }
+            .page-break {
+                page-break-before: always;
+            }
+        }
+        .short-answer-feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-blue-800 mb-2">Pathophysiology Final Exam</h1>
+            <p class="text-gray-600">Interactive Mock Exam for Comprehensive Review</p>
+        </header>
+
+        <!-- Introduction -->
+        <div id="introduction" class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <h2 class="text-xl font-semibold mb-4">Exam Instructions</h2>
+            <p class="mb-4">This mock exam is designed to test your understanding of key concepts in Pathophysiology. It includes both multiple choice and short answer questions covering all topics from your review material.</p>
+            <ul class="list-disc pl-6 mb-4">
+                <li>The exam includes 20 questions generated randomly from your study material</li>
+                <li>You can use the "Show Hint" button if you need assistance with a question</li>
+                <li>After completing the exam, you'll receive feedback on your performance and study recommendations</li>
+                <li>Each time you restart the exam, questions will be randomized for additional practice</li>
+            </ul>
+            <button id="start-btn" class="btn btn-primary w-full md:w-auto">Start Exam</button>
+        </div>
+
+        <!-- Exam Container (hidden initially) -->
+        <div id="exam-container" class="hidden">
+            <!-- Progress Bar -->
+            <div class="mb-6">
+                <div class="flex justify-between text-sm text-gray-600 mb-1">
+                    <span>Question <span id="current-question">1</span> of <span id="total-questions">20</span></span>
+                    <span>Time: <span id="timer">00:00</span></span>
+                </div>
+                <div class="progress-bar">
+                    <div id="progress" class="progress" style="width: 5%;"></div>
+                </div>
+            </div>
+
+            <!-- Question Container -->
+            <div id="question-container" class="question-container">
+                <h3 id="question-text" class="text-lg font-medium mb-4">Question text will appear here</h3>
+                
+                <!-- Multiple Choice Options -->
+                <div id="multiple-choice-container" class="options mb-4">
+                    <!-- Options will be dynamically added here -->
+                </div>
+
+                <!-- Short Answer Container -->
+                <div id="short-answer-container" class="mb-4 hidden">
+                    <textarea id="short-answer-input" class="w-full p-3 border border-gray-300 rounded-md" rows="4" placeholder="Type your answer here..."></textarea>
+                    <div id="short-answer-feedback" class="short-answer-feedback hidden"></div>
+                </div>
+
+                <!-- Hint Button -->
+                <div class="mt-4">
+                    <button id="hint-btn" class="btn btn-hint">
+                        <i class="fas fa-lightbulb mr-2"></i>Show Hint
+                    </button>
+                    <div id="hint-content" class="hint-content mt-2"></div>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="flex justify-between mt-6 mb-8">
+                <button id="prev-btn" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left mr-2"></i>Previous
+                </button>
+                <button id="submit-btn" class="btn btn-primary">
+                    Submit Answer
+                </button>
+                <button id="next-btn" class="btn btn-secondary">
+                    Next<i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Container (hidden initially) -->
+        <div id="results-container" class="hidden">
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h2 class="text-2xl font-bold mb-4">Exam Results</h2>
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <p class="text-lg">Score: <span id="score-value" class="font-bold">0</span>/<span id="total-score">20</span></p>
+                        <p class="text-gray-600">Completion Time: <span id="completion-time">00:00</span></p>
+                    </div>
+                    <div class="text-center">
+                        <div id="score-circle" class="relative w-24 h-24 mx-auto">
+                            <svg class="w-24 h-24" viewBox="0 0 36 36">
+                                <path class="text-gray-200 stroke-current" stroke-width="2" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                <path id="score-circle-path" class="text-blue-500 stroke-current" stroke-width="2" fill="none" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center text-xl font-bold" id="percentage">0%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="text-lg font-semibold mb-3">Study Recommendations</h3>
+                <div id="study-recommendations" class="study-recommendation">
+                    <!-- Study recommendations will be added here -->
+                </div>
+                
+                <div class="mt-6">
+                    <button id="review-btn" class="btn btn-primary mr-2">Review Answers</button>
+                    <button id="restart-btn" class="btn btn-secondary">Restart Exam</button>
+                </div>
+            </div>
+            
+            <!-- Answers Review Section -->
+            <div id="answers-review" class="hidden">
+                <h3 class="text-xl font-semibold mb-4">Review of Answers</h3>
+                <div id="review-questions">
+                    <!-- Questions and answers will be added here -->
+                </div>
+                <button id="back-to-results" class="btn btn-secondary mt-6">Back to Results</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ================ DATA ================
+        const questionsData = [
+            // Intro to Pathophysiology and Cellular Injuries
+            {
+                id: 1,
+                type: 'multiple',
+                question: 'What is Pathophysiology?',
+                options: [
+                    'The study of the structure of the body',
+                    'The study of the function of the body',
+                    'The study of diseases/injuries',
+                    'The study of deviations from the physiological norm that result in a diseased/injured state'
+                ],
+                correctAnswer: 3,
+                topic: 'Intro to Pathophysiology',
+                hint: 'Think about the prefix "patho-" and what it relates to in medical terminology.'
+            },
+            {
+                id: 2,
+                type: 'multiple',
+                question: 'Which of the following is NOT one of the 4 central concepts in pathophysiology?',
+                options: [
+                    'Etiology',
+                    'Morphology',
+                    'Pathogenesis',
+                    'Symptomatology'
+                ],
+                correctAnswer: 3,
+                topic: 'Intro to Pathophysiology',
+                hint: 'The 4 central concepts include the cause, mechanism, appearance, and clinical manifestations of disease.'
+            },
+            {
+                id: 3,
+                type: 'multiple',
+                question: 'Which type of necrosis is characterized by coagulation of cells with loss of nuclei and denatured proteins?',
+                options: [
+                    'Liquefactive necrosis',
+                    'Fat necrosis',
+                    'Coagulative necrosis',
+                    'Caseous necrosis'
+                ],
+                correctAnswer: 2,
+                topic: 'Cellular Injuries',
+                hint: 'This type of necrosis is commonly seen in infarcts of the heart and kidneys.'
+            },
+            {
+                id: 4,
+                type: 'shortAnswer',
+                question: 'List and briefly explain the 4 central concepts in pathophysiology.',
+                correctAnswer: ['etiology cause of disease', 'pathogenesis mechanism of disease', 'morphology appearance of disease', 'functional consequences clinical manifestations signs symptoms'],
+                topic: 'Intro to Pathophysiology',
+                hint: 'Think about what causes the disease, how it develops, how it looks, and how it affects the body functions.'
+            },
+            {
+                id: 5,
+                type: 'multiple',
+                question: 'Which of the following is NOT one of the 8 common functions of cells?',
+                options: [
+                    'Movement',
+                    'Conductivity',
+                    'Calcification',
+                    'Communication'
+                ],
+                correctAnswer: 2,
+                topic: 'Cellular Injuries',
+                hint: 'The common functions include movement, conductivity, metabolic absorption, secretion, excretion, respiration, reproduction, and communication.'
+            },
+            
+            // Inflammation
+            {
+                id: 6,
+                type: 'multiple',
+                question: 'Which of the following best characterizes chronic inflammation?',
+                options: [
+                    'Short duration with neutrophils involved',
+                    'Long duration with lymphocytes involved',
+                    'Short duration with lymphocytes involved',
+                    'Long duration with neutrophils involved'
+                ],
+                correctAnswer: 1,
+                topic: 'Inflammation',
+                hint: 'Think about the difference between acute and chronic conditions in terms of duration and cell types involved.'
+            },
+            {
+                id: 7,
+                type: 'shortAnswer',
+                question: 'Describe the steps in the pathogenesis of acute inflammation.',
+                correctAnswer: ['injury', 'vasodilation', 'increased vascular permeability', 'margination', 'rolling', 'adhesion', 'transmigration', 'chemotaxis', 'leukocyte activation', 'phagocytosis'],
+                topic: 'Inflammation',
+                hint: 'The process begins with injury and includes vascular changes followed by cellular responses.'
+            },
+            {
+                id: 8,
+                type: 'multiple',
+                question: 'Which morphological pattern of acute inflammation is characterized by accumulation of fluid and injury under the surface of the epithelium?',
+                options: [
+                    'Fibrinous',
+                    'Serous',
+                    'Suppurative',
+                    'Ulcer'
+                ],
+                correctAnswer: 1,
+                topic: 'Inflammation',
+                hint: 'This pattern is commonly seen in conditions like sunburn leading to blisters.'
+            },
+            
+            // Regeneration and Repair & Immunity
+            {
+                id: 9,
+                type: 'multiple',
+                question: 'Cells that are actively dividing are classified as:',
+                options: [
+                    'Labile cells',
+                    'Stable cells',
+                    'Permanent cells',
+                    'Static cells'
+                ],
+                correctAnswer: 0,
+                topic: 'Regeneration and Repair',
+                hint: 'These cells continuously divide throughout life and have not left the cell cycle.'
+            },
+            {
+                id: 10,
+                type: 'multiple',
+                question: 'Which of the following is NOT considered a first line of defense in the immune system?',
+                options: [
+                    'Skin',
+                    'T-cells',
+                    'Mucous membranes',
+                    'Natural microbial flora'
+                ],
+                correctAnswer: 1,
+                topic: 'Immunity',
+                hint: 'The first line of defense includes physical and chemical barriers, not adaptive immune cells.'
+            },
+            
+            // Neoplasia & Genetics
+            {
+                id: 11,
+                type: 'multiple',
+                question: 'The formation of additional malignant growths in locations distant from the primary tumor is called:',
+                options: [
+                    'Carcinogenesis',
+                    'Metastasis',
+                    'Neoplasia',
+                    'Oncogenesis'
+                ],
+                correctAnswer: 1,
+                topic: 'Neoplasia',
+                hint: 'This term refers to the spread of cancer cells from the primary site to distant parts of the body.'
+            },
+            {
+                id: 12,
+                type: 'shortAnswer',
+                question: 'List the main enzymes involved in DNA replication and their functions.',
+                correctAnswer: ['helicase separates strands', 'rna primase creates rna primers', 'dna polymerase iii synthesizes new strands', 'dna polymerase i replaces rna primers with dna', 'dna ligase joins fragments'],
+                topic: 'Genetics',
+                hint: 'Think about the different steps in DNA replication and which enzymes are responsible for each step.'
+            },
+            
+            // Musculoskeletal and Integumentary Systems
+            {
+                id: 13,
+                type: 'multiple',
+                question: 'Which cells are responsible for forming bone?',
+                options: [
+                    'Osteoclasts',
+                    'Osteoblasts',
+                    'Osteocytes',
+                    'Osteopontin'
+                ],
+                correctAnswer: 1,
+                topic: 'Musculoskeletal System',
+                hint: 'These cells synthesize and secrete osteoid, which later mineralizes to form bone matrix.'
+            },
+            {
+                id: 14,
+                type: 'multiple',
+                question: 'Which of the following is NOT a function of the musculoskeletal system?',
+                options: [
+                    'Support and protection',
+                    'Mobility',
+                    'Hematopoiesis',
+                    'Hormone production'
+                ],
+                correctAnswer: 3,
+                topic: 'Musculoskeletal System',
+                hint: 'Think about the main functions of bones, joints, and muscles in the body.'
+            },
+            {
+                id: 15,
+                type: 'multiple',
+                question: 'Which vitamin deficiency can lead to rickets and osteomalacia?',
+                options: [
+                    'Vitamin A',
+                    'Vitamin B12',
+                    'Vitamin C',
+                    'Vitamin D'
+                ],
+                correctAnswer: 3,
+                topic: 'Musculoskeletal System',
+                hint: 'This vitamin is important for calcium absorption and bone mineralization.'
+            },
+            
+            // Cardiovascular System
+            {
+                id: 16,
+                type: 'multiple',
+                question: 'Which of the following is NOT a layer of the heart wall?',
+                options: [
+                    'Epicardium',
+                    'Myocardium',
+                    'Endocardium',
+                    'Pericardium'
+                ],
+                correctAnswer: 3,
+                topic: 'Cardiovascular System',
+                hint: 'The heart wall consists of three layers, while this option refers to the membrane surrounding the heart.'
+            },
+            {
+                id: 17,
+                type: 'shortAnswer',
+                question: 'Describe the pathogenesis of atherosclerosis.',
+                correctAnswer: ['damaged epithelium', 'macrophages ingest lipids', 'foam cells', 'fatty streak', 'fibrous lesion', 'complicated lesion'],
+                topic: 'Cardiovascular System',
+                hint: 'Think about the progression from initial damage to the formation of plaques in blood vessels.'
+            },
+            
+            // Respiratory System
+            {
+                id: 18,
+                type: 'multiple',
+                question: 'Which of the following correctly describes the structure of the lungs?',
+                options: [
+                    'Right lung has two lobes, left lung has three lobes',
+                    'Right lung has three lobes, left lung has two lobes',
+                    'Both lungs have three lobes each',
+                    'Both lungs have two lobes each'
+                ],
+                correctAnswer: 1,
+                topic: 'Respiratory System',
+                hint: 'The left lung has fewer lobes because it shares space with the heart in the thoracic cavity.'
+            },
+            {
+                id: 19,
+                type: 'multiple',
+                question: 'Which condition is characterized by persistent airflow limitation and inflammation of the lungs?',
+                options: [
+                    'Pneumothorax',
+                    'Pleural effusion',
+                    'COPD',
+                    'Pneumonia'
+                ],
+                correctAnswer: 2,
+                topic: 'Respiratory System',
+                hint: 'This chronic condition is often associated with tobacco smoke exposure and presents with symptoms like chronic cough and dyspnea.'
+            },
+            
+            // Gastrointestinal System
+            {
+                id: 20,
+                type: 'multiple',
+                question: 'Which of the following is NOT a main function of the gastrointestinal system?',
+                options: [
+                    'Ingestion',
+                    'Peristalsis',
+                    'Hematopoiesis',
+                    'Absorption'
+                ],
+                correctAnswer: 2,
+                topic: 'Gastrointestinal System',
+                hint: 'The main functions include processing food, absorbing nutrients, and eliminating waste.'
+            },
+            {
+                id: 21,
+                type: 'multiple',
+                question: 'Which condition is characterized by reflux of gastric acid from the stomach into the distal aspect of the esophagus?',
+                options: [
+                    'Peptic ulcer disease',
+                    'Crohn\'s disease',
+                    'Gastroesophageal reflux disorder (GERD)',
+                    'Ulcerative colitis'
+                ],
+                correctAnswer: 2,
+                topic: 'Gastrointestinal System',
+                hint: 'This condition often presents with symptoms like heartburn and a sour taste in the mouth.'
+            },
+            
+            // Hepatobiliary System
+            {
+                id: 22,
+                type: 'multiple',
+                question: 'Which of the following is NOT a function of the liver?',
+                options: [
+                    'Excretory function',
+                    'Insulin production',
+                    'Metabolic function',
+                    'Storage function'
+                ],
+                correctAnswer: 1,
+                topic: 'Hepatobiliary System',
+                hint: 'The liver has many functions, but hormone production is primarily associated with other organs.'
+            },
+            {
+                id: 23,
+                type: 'multiple',
+                question: 'Which of the following types of hepatitis is spread via the fecal-oral route?',
+                options: [
+                    'Hepatitis A',
+                    'Hepatitis B',
+                    'Hepatitis C',
+                    'Hepatitis D'
+                ],
+                correctAnswer: 0,
+                topic: 'Hepatobiliary System',
+                hint: 'This type of hepatitis is often associated with poor sanitation and contaminated food or water.'
+            },
+            
+            // Endocrine System
+            {
+                id: 24,
+                type: 'multiple',
+                question: 'Which of the following cells in the pancreas secrete insulin?',
+                options: [
+                    'Alpha cells',
+                    'Beta cells',
+                    'Delta cells',
+                    'F cells'
+                ],
+                correctAnswer: 1,
+                topic: 'Endocrine System',
+                hint: 'Dysfunction of these cells is central to the pathophysiology of diabetes mellitus.'
+            },
+            {
+                id: 25,
+                type: 'shortAnswer',
+                question: 'List five clinical manifestations of Type 1 Diabetes.',
+                correctAnswer: ['polydipsia', 'polyuria', 'hyperglycemia', 'glycosuria', 'polyphagia', 'weight loss', 'fatigue', 'recurrent infections', 'prolonged wound healing'],
+                topic: 'Endocrine System',
+                hint: 'Think about the classic symptoms that result from insulin deficiency and hyperglycemia.'
+            },
+            
+            // Renal and Reproductive Systems
+            {
+                id: 26,
+                type: 'multiple',
+                question: 'Which of the following is NOT a function of the renal system?',
+                options: [
+                    'Remove waste products',
+                    'Maintain fluid/electrolyte balance',
+                    'Produce insulin',
+                    'Control red blood cell production'
+                ],
+                correctAnswer: 2,
+                topic: 'Renal System',
+                hint: 'The kidneys have many functions related to homeostasis, but hormone production is limited to specific ones, not including this option.'
+            },
+            {
+                id: 27,
+                type: 'multiple',
+                question: 'Which of the following is a consequence of renal failure?',
+                options: [
+                    'Increased red blood cell production',
+                    'Metabolic alkalosis',
+                    'Hypocalcemia',
+                    'Decreased blood pressure'
+                ],
+                correctAnswer: 2,
+                topic: 'Renal System',
+                hint: 'Renal failure affects calcium metabolism due to impaired vitamin D activation.'
+            },
+            
+            // Nervous System
+            {
+                id: 28,
+                type: 'multiple',
+                question: 'Which of the following is NOT one of the layers of the meninges?',
+                options: [
+                    'Dura mater',
+                    'Arachnoid mater',
+                    'Pia mater',
+                    'Serous mater'
+                ],
+                correctAnswer: 3,
+                topic: 'Nervous System',
+                hint: 'The meninges consist of three protective layers surrounding the brain and spinal cord.'
+            },
+            {
+                id: 29,
+                type: 'multiple',
+                question: 'How many lobes does the cerebrum have?',
+                options: [
+                    '2',
+                    '4',
+                    '6',
+                    '8'
+                ],
+                correctAnswer: 1,
+                topic: 'Nervous System',
+                hint: 'The cerebrum is divided into distinct lobes with different functions.'
+            },
+            {
+                id: 30,
+                type: 'shortAnswer',
+                question: 'List the 5 Fs associated with the limbic system and their functions.',
+                correctAnswer: ['feeding satiety hunger', 'forgetting memory', 'fighting emotional response', 'family reproduction maternal instincts', 'fucking sexual arousal'],
+                topic: 'Nervous System',
+                hint: 'These five F-words represent the main functions controlled by the limbic system in the brain.'
+            }
+        ];
+
+        // ================ VARIABLES ================
+        let currentQuestionIndex = 0;
+        let selectedQuestions = [];
+        let userAnswers = [];
+        let score = 0;
+        let startTime;
+        let timerInterval;
+        let seconds = 0;
+
+        // ================ DOM ELEMENTS ================
+        const introSection = document.getElementById('introduction');
+        const examContainer = document.getElementById('exam-container');
+        const resultsContainer = document.getElementById('results-container');
+        const answersReview = document.getElementById('answers-review');
+        
+        const startBtn = document.getElementById('start-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const hintBtn = document.getElementById('hint-btn');
+        const reviewBtn = document.getElementById('review-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const backToResultsBtn = document.getElementById('back-to-results');
+        
+        const questionText = document.getElementById('question-text');
+        const multipleChoiceContainer = document.getElementById('multiple-choice-container');
+        const shortAnswerContainer = document.getElementById('short-answer-container');
+        const shortAnswerInput = document.getElementById('short-answer-input');
+        const shortAnswerFeedback = document.getElementById('short-answer-feedback');
+        const hintContent = document.getElementById('hint-content');
+        const progressBar = document.getElementById('progress');
+        const currentQuestionDisplay = document.getElementById('current-question');
+        const totalQuestionsDisplay = document.getElementById('total-questions');
+        const timerDisplay = document.getElementById('timer');
+        
+        const scoreValue = document.getElementById('score-value');
+        const totalScore = document.getElementById('total-score');
+        const percentage = document.getElementById('percentage');
+        const scoreCirclePath = document.getElementById('score-circle-path');
+        const completionTime = document.getElementById('completion-time');
+        const studyRecommendations = document.getElementById('study-recommendations');
+        const reviewQuestions = document.getElementById('review-questions');
+
+        // ================ FUNCTIONS ================
+        
+        // Start the exam
+        function startExam() {
+            // Randomly select 20 questions
+            selectedQuestions = selectRandomQuestions(questionsData, 20);
+            userAnswers = new Array(selectedQuestions.length).fill(null);
+            
+            introSection.classList.add('hidden');
+            examContainer.classList.remove('hidden');
+            
+            totalQuestionsDisplay.textContent = selectedQuestions.length;
+            currentQuestionIndex = 0;
+            score = 0;
+            
+            // Start timer
+            startTime = new Date();
+            seconds = 0;
+            timerInterval = setInterval(updateTimer, 1000);
+            
+            showQuestion(currentQuestionIndex);
+            updateProgressBar();
+        }
+        
+        // Update timer display
+        function updateTimer() {
+            seconds++;
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+        
+        // Randomly select n questions from the array
+        function selectRandomQuestions(questions, n) {
+            const shuffled = [...questions].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, n);
+        }
+        
+        // Display the current question
+        function showQuestion(index) {
+            const question = selectedQuestions[index];
+            
+            // Update question number display
+            currentQuestionDisplay.textContent = index + 1;
+            
+            // Set question text
+            questionText.textContent = question.question;
+            
+            // Clear previous content
+            multipleChoiceContainer.innerHTML = '';
+            shortAnswerContainer.classList.add('hidden');
+            shortAnswerFeedback.classList.add('hidden');
+            hintContent.style.display = 'none';
+            hintContent.textContent = '';
+            
+            // Show the appropriate answer input based on question type
+            if (question.type === 'multiple') {
+                multipleChoiceContainer.classList.remove('hidden');
+                
+                // Create options for multiple choice
+                question.options.forEach((option, i) => {
+                    const label = document.createElement('label');
+                    label.className = 'option flex items-center cursor-pointer';
+                    
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = 'answer';
+                    input.value = i;
+                    input.className = 'mr-2';
+                    input.checked = userAnswers[index] === i;
+                    
+                    const span = document.createElement('span');
+                    span.textContent = option;
+                    
+                    label.appendChild(input);
+                    label.appendChild(span);
+                    multipleChoiceContainer.appendChild(label);
+                });
+            } else if (question.type === 'shortAnswer') {
+                shortAnswerContainer.classList.remove('hidden');
+                shortAnswerInput.value = userAnswers[index] || '';
+            }
+            
+            // Update navigation buttons
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === selectedQuestions.length - 1;
+            
+            updateProgressBar();
+        }
+        
+        // Update the progress bar
+        function updateProgressBar() {
+            const progress = ((currentQuestionIndex + 1) / selectedQuestions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+        
+        // Save the user's answer
+        function saveAnswer() {
+            const question = selectedQuestions[currentQuestionIndex];
+            
+            if (question.type === 'multiple') {
+                const selectedOption = document.querySelector('input[name="answer"]:checked');
+                if (selectedOption) {
+                    userAnswers[currentQuestionIndex] = parseInt(selectedOption.value);
+                }
+            } else if (question.type === 'shortAnswer') {
+                userAnswers[currentQuestionIndex] = shortAnswerInput.value.trim();
+            }
+        }
+        
+        // Navigate to the next question
+        function nextQuestion() {
+            saveAnswer();
+            
+            if (currentQuestionIndex < selectedQuestions.length - 1) {
+                currentQuestionIndex++;
+                showQuestion(currentQuestionIndex);
+            }
+        }
+        
+        // Navigate to the previous question
+        function prevQuestion() {
+            saveAnswer();
+            
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion(currentQuestionIndex);
+            }
+        }
+        
+        // Submit the current answer
+        function submitAnswer() {
+            saveAnswer();
+            
+            const question = selectedQuestions[currentQuestionIndex];
+            const userAnswer = userAnswers[currentQuestionIndex];
+            
+            // Evaluate the answer
+            if (question.type === 'multiple') {
+                if (userAnswer === question.correctAnswer) {
+                    // Correct answer
+                    const options = multipleChoiceContainer.querySelectorAll('.option');
+                    options[userAnswer].classList.add('correct-answer');
+                } else {
+                    // Incorrect answer
+                    const options = multipleChoiceContainer.querySelectorAll('.option');
+                    if (userAnswer !== null) {
+                        options[userAnswer].classList.add('incorrect-answer');
+                    }
+                    options[question.correctAnswer].classList.add('correct-answer');
+                }
+            } else if (question.type === 'shortAnswer') {
+                shortAnswerFeedback.classList.remove('hidden');
+                
+                // Check if the answer contains key concepts
+                const answer = userAnswer.toLowerCase();
+                const isCorrect = evaluateShortAnswer(answer, question.correctAnswer);
+                
+                if (isCorrect) {
+                    shortAnswerFeedback.textContent = 'Correct! Your answer includes the key concepts.';
+                    shortAnswerFeedback.className = 'short-answer-feedback bg-green-100 border-l-4 border-green-500 text-green-700';
+                } else {
+                    shortAnswerFeedback.textContent = `Incorrect. The answer should include: ${question.correctAnswer.join(', ')}`;
+                    shortAnswerFeedback.className = 'short-answer-feedback bg-red-100 border-l-4 border-red-500 text-red-700';
+                }
+            }
+            
+            // Disable inputs after submission
+            if (question.type === 'multiple') {
+                const radioInputs = multipleChoiceContainer.querySelectorAll('input[type="radio"]');
+                radioInputs.forEach(input => input.disabled = true);
+            } else if (question.type === 'shortAnswer') {
+                shortAnswerInput.disabled = true;
+            }
+            
+            // Show hint after submission
+            hintContent.textContent = question.hint;
+            hintContent.style.display = 'block';
+            
+            // Disable submit button
+            submitBtn.disabled = true;
+        }
+        
+        // Evaluate short answer by checking for key concepts
+        function evaluateShortAnswer(answer, keyWords) {
+            const matchCount = keyWords.filter(keyword => 
+                answer.includes(keyword.toLowerCase())
+            ).length;
+            
+            // Consider correct if at least 60% of key concepts are mentioned
+            return matchCount >= Math.ceil(keyWords.length * 0.6);
+        }
+        
+        // Show hint for the current question
+        function showHint() {
+            const question = selectedQuestions[currentQuestionIndex];
+            hintContent.textContent = question.hint;
+            hintContent.style.display = 'block';
+        }
+        
+        // Finish the exam and show results
+        function finishExam() {
+            clearInterval(timerInterval);
+            
+            // Calculate score
+            score = 0;
+            const wrongTopics = {};
+            
+            selectedQuestions.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                
+                if (question.type === 'multiple') {
+                    if (userAnswer === question.correctAnswer) {
+                        score++;
+                    } else {
+                        // Track topics with wrong answers
+                        if (!wrongTopics[question.topic]) {
+                            wrongTopics[question.topic] = 0;
+                        }
+                        wrongTopics[question.topic]++;
+                    }
+                } else if (question.type === 'shortAnswer') {
+                    if (evaluateShortAnswer(userAnswer.toLowerCase(), question.correctAnswer)) {
+                        score++;
+                    } else {
+                        // Track topics with wrong answers
+                        if (!wrongTopics[question.topic]) {
+                            wrongTopics[question.topic] = 0;
+                        }
+                        wrongTopics[question.topic]++;
+                    }
+                }
+            });
+            
+            // Update results display
+            examContainer.classList.add('hidden');
+            resultsContainer.classList.remove('hidden');
+            answersReview.classList.add('hidden');
+            
+            scoreValue.textContent = score;
+            totalScore.textContent = selectedQuestions.length;
+            
+            const percentageValue = Math.round((score / selectedQuestions.length) * 100);
+            percentage.textContent = `${percentageValue}%`;
+            scoreCirclePath.setAttribute('stroke-dasharray', `${percentageValue}, 100`);
+            
+            // Calculate completion time
+            const endTime = new Date();
+            const timeDiff = Math.round((endTime - startTime) / 1000); // in seconds
+            const minutes = Math.floor(timeDiff / 60);
+            const seconds = timeDiff % 60;
+            completionTime.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Generate study recommendations
+            generateStudyRecommendations(wrongTopics);
+            
+            // Prepare review content
+            prepareReviewContent();
+        }
+        
+        // Generate study recommendations based on wrong answers
+        function generateStudyRecommendations(wrongTopics) {
+            studyRecommendations.innerHTML = '';
+            
+            if (Object.keys(wrongTopics).length === 0) {
+                studyRecommendations.innerHTML = '<p>Excellent work! You have a strong understanding of all topics.</p>';
+                return;
+            }
+            
+            // Sort topics by number of wrong answers (descending)
+            const sortedTopics = Object.entries(wrongTopics)
+                .sort((a, b) => b[1] - a[1])
+                .map(entry => entry[0]);
+            
+            const recommendationsHTML = `
+                <p class="mb-3">Based on your performance, focus on studying these topics:</p>
+                <ol class="list-decimal list-inside mb-3">
+                    ${sortedTopics.map(topic => `<li class="mb-1"><strong>${topic}</strong> - Review key concepts and mechanisms</li>`).join('')}
+                </ol>
+                <p>For each topic, make sure to understand the definitions, mechanisms, and clinical applications.</p>
+            `;
+            
+            studyRecommendations.innerHTML = recommendationsHTML;
+        }
+        
+        // Prepare content for the review section
+        function prepareReviewContent() {
+            reviewQuestions.innerHTML = '';
+            
+            selectedQuestions.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = question.type === 'multiple' 
+                    ? userAnswer === question.correctAnswer 
+                    : evaluateShortAnswer(userAnswer.toLowerCase(), question.correctAnswer);
+                
+                const questionCard = document.createElement('div');
+                questionCard.className = `results-card mb-4 ${isCorrect ? 'bg-green-50' : 'bg-red-50'}`;
+                
+                let answerHTML = '';
+                if (question.type === 'multiple') {
+                    answerHTML = `
+                        <p class="mb-2"><strong>Your answer:</strong> ${userAnswer !== null ? question.options[userAnswer] : 'Not answered'}</p>
+                        <p class="mb-2"><strong>Correct answer:</strong> ${question.options[question.correctAnswer]}</p>
+                    `;
+                } else if (question.type === 'shortAnswer') {
+                    answerHTML = `
+                        <p class="mb-2"><strong>Your answer:</strong> ${userAnswer || 'Not answered'}</p>
+                        <p class="mb-2"><strong>Key concepts needed:</strong> ${question.correctAnswer.join(', ')}</p>
+                    `;
+                }
+                
+                questionCard.innerHTML = `
+                    <h4 class="text-lg font-medium mb-2">Question ${index + 1}: ${question.question}</h4>
+                    ${answerHTML}
+                    <p class="mt-2"><strong>Topic:</strong> ${question.topic}</p>
+                    <p class="mt-2"><strong>Hint:</strong> ${question.hint}</p>
+                    <div class="mt-2 ${isCorrect ? 'text-green-700' : 'text-red-700'} font-medium">
+                        ${isCorrect ? '✓ Correct' : '✗ Incorrect'}
+                    </div>
+                `;
+                
+                reviewQuestions.appendChild(questionCard);
+            });
+        }
+        
+        // Restart the exam
+        function restartExam() {
+            resultsContainer.classList.add('hidden');
+            startExam();
+        }
+        
+        // Show the review of answers
+        function showReview() {
+            document.getElementById('results-container').querySelector('.bg-white').classList.add('hidden');
+            answersReview.classList.remove('hidden');
+        }
+        
+        // Go back to results from review
+        function backToResults() {
+            document.getElementById('results-container').querySelector('.bg-white').classList.remove('hidden');
+            answersReview.classList.add('hidden');
+        }
+
+        // ================ EVENT LISTENERS ================
+        startBtn.addEventListener('click', startExam);
+        prevBtn.addEventListener('click', prevQuestion);
+        nextBtn.addEventListener('click', nextQuestion);
+        submitBtn.addEventListener('click', submitAnswer);
+        hintBtn.addEventListener('click', showHint);
+        reviewBtn.addEventListener('click', showReview);
+        restartBtn.addEventListener('click', restartExam);
+        backToResultsBtn.addEventListener('click', backToResults);
+        
+        // Event listener for "Finish Exam" when on the last question
+        nextBtn.addEventListener('click', function() {
+            if (currentQuestionIndex === selectedQuestions.length - 1) {
+                finishExam();
+            }
+        });
+    </script>
+
+</body></html>
