@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Services</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --charcoal: #1E1E1E;
+            --red: #D72638;
+            --yellow: #F7C948;
+        }
+        
+        body {
+            background-color: var(--charcoal);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .bg-charcoal {
+            background-color: var(--charcoal);
+        }
+        
+        .bg-brand-red {
+            background-color: var(--red);
+        }
+        
+        .bg-brand-yellow {
+            background-color: var(--yellow);
+        }
+        
+        .text-brand-red {
+            color: var(--red);
+        }
+        
+        .text-brand-yellow {
+            color: var(--yellow);
+        }
+        
+        .border-brand-red {
+            border-color: var(--red);
+        }
+        
+        .border-brand-yellow {
+            border-color: var(--yellow);
+        }
+        
+        .filter-button {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .filter-button:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background-color: var(--red);
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+        
+        .filter-button:hover:after,
+        .filter-button.active:after {
+            height: 100%;
+        }
+        
+        .filter-button.active {
+            color: white;
+            border-color: var(--red);
+        }
+        
+        .service-card {
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .service-icon {
+            transition: all 0.5s ease;
+        }
+        
+        .service-card:hover .service-icon {
+            transform: rotateY(360deg);
+        }
+        
+        .modal {
+            background-color: rgba(0, 0, 0, 0.8);
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(1.1);
+            transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+        }
+        
+        .modal-visible {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1.0);
+            transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--red);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+    </style>
+</head>
+<body class="min-h-screen" style="overflow: auto;">
+    <main class="container mx-auto px-4 py-16 max-w-6xl">
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Our Services</h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">Tailored media solutions designed to help your business achieve tangible results, not just create content.</p>
+        </header>
+        
+        <!-- Filter Section -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-semibold mb-6 section-title">What are you looking to achieve?</h2>
+            <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                <button class="filter-button px-6 py-3 rounded-full border-2 border-gray-600 text-white text-sm md:text-base font-medium active" data-filter="all">
+                    Show All Services
+                </button>
+                <button class="filter-button px-6 py-3 rounded-full border-2 border-gray-600 text-white text-sm md:text-base font-medium" data-filter="social">
+                    I want to grow my social media
+                </button>
+                <button class="filter-button px-6 py-3 rounded-full border-2 border-gray-600 text-white text-sm md:text-base font-medium" data-filter="video">
+                    I need a video ad
+                </button>
+                <button class="filter-button px-6 py-3 rounded-full border-2 border-gray-600 text-white text-sm md:text-base font-medium" data-filter="event">
+                    I'm planning an event
+                </button>
+                <button class="filter-button px-6 py-3 rounded-full border-2 border-gray-600 text-white text-sm md:text-base font-medium" data-filter="website">
+                    I need a simple website
+                </button>
+            </div>
+        </section>
+        
+        <!-- Services Grid -->
+        <section class="service-grid">
+            <!-- Social Media Content & Management -->
+            <div class="mb-16 service-category" data-category="social" style="display: block;">
+                <h2 class="text-2xl md:text-3xl font-bold mb-10 section-title">Social Media Content &amp; Management</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Service Card 1 -->
+                    <div class="service-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800 opacity-0 animate-fadeIn delay-100" style="opacity: 1;">
+                        <div class="p-8">
+                            <div class="service-icon bg-brand-yellow w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                                <i class="fas fa-calendar-alt text-charcoal text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">Content Strategy &amp; Calendars</h3>
+                            <p class="text-gray-400 mb-6">Strategic content planning to grow your audience and increase engagement across platforms.</p>
+                            <button class="learn-more bg-transparent hover:bg-brand-red text-brand-yellow hover:text-white border border-brand-yellow hover:border-brand-red px-4 py-2 rounded transition duration-300 text-sm font-medium" data-service="content-strategy">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Card 2 -->
+                    <div class="service-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800 opacity-0 animate-fadeIn delay-200" style="opacity: 1;">
+                        <div class="p-8">
+                            <div class="service-icon bg-brand-yellow w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                                <i class="fas fa-palette text-charcoal text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">Branded Graphic Templates</h3>
+                            <p class="text-gray-400 mb-6">Custom-designed graphics that maintain brand consistency and capture attention in busy feeds.</p>
+                            <button class="learn-more bg-transparent hover:bg-brand-red text-brand-yellow hover:text-white border border-brand-yellow hover:border-brand-red px-4 py-2 rounded transition duration-300 text-sm font-medium" data-service="branded-templates">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Card 3 -->
+                    <div class="service-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800 opacity-0 animate-fadeIn delay-300" style="opacity: 1;">
+                        <div class="p-8">
+                            <div class="service-icon bg-brand-yellow w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                                <i class="fas fa-video text-charcoal text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">Short-form Video Editing</h3>
+                            <p class="text-gray-400 mb-6">Attention-grabbing reels and TikToks that boost engagement and followers with professional editing.</p>
+                            <button class="learn-more bg-transparent hover:bg-brand-red text-brand-yellow hover:text-white border border-brand-yellow hover:border-brand-red px-4 py-2 rounded transition duration-300 text-sm font-medium" data-service="short-form-video">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Brand & Product Promotion -->
+            <div class="mb-16 service-category" data-category="video" style="display: block;">
+                <h2 class="text-2xl md:text-3xl font-bold mb-10 section-title">Brand &amp; Product Promotion</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Service Card 1 -->
+                    <div class="service-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800 opacity-0 animate-fadeIn delay-100" style="opacity: 1;">
+                        <div class="p-8">
+                            <div class="service-icon bg-brand-yellow w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                                <i class="fas fa-ad text-charcoal text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">Video Ad Campaigns</h3>
+                            <p class="text-gray-400 mb-6">High-converting video ads designed to showcase your products and drive meaningful customer action.</p>
+                            <button class="learn-more bg-transparent hover:bg-brand-red text-brand-yellow hover:text-white border border-brand-yellow hover:border-brand-red px-4 py-2 rounded transition duration-300 text-sm font-medium" data-service="video-ads">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Card 2 -->
+                    <div class="service-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800 opacity-0 animate-fadeIn delay-200" style="opacity: 1;">
+                        <div class="p-8">
+                            <div class="service-icon bg-brand-yellow w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                                <i class="fas fa-chart-line text-charcoal text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">Motion Graphics &amp; Explainers</h3>
+                            <p class="text-gray-400 mb-6">Animated visuals that simplify complex ideas and make your brand message more memorable.</p>
+                            <button class="learn-more bg-transparent hover:bg-brand-red text-brand-yellow hover:text-white border border-brand-yellow hover:border-brand-red px-4 py-2 rounded transition duration-300 text-sm font-medium" data-service="motion-graphics">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Card 3 -->
+                    
+                </div>
+            </div>
+            
+            <!-- Events & Launch Coverage -->
+            <div class="mb-16 service-category" data-category="event" style="display: block;">
+                <h2 class="text-2xl md:text-3xl font-bold mb-10 section-title">Events &amp; Launch Coverage</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Service Card 1 -->
+                    <div class="service-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800 opacity-0 animate-fadeIn delay-100" style="opacity: 1;">
+                        <div class="p-8">
+                            <div class="service-icon bg-brand-yellow w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                                <i class="fas fa-camera text-charcoal text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">Cinematic Event Coverage</h3>
+                            <p class="text-gray-400 mb-6">Professional ground and aerial videography that captures the atmosphere and highlights of your events.</p>
+                            <button class="learn-more bg-transparent hover:bg-brand-red text-brand-yellow hover:text-white border border-brand-yellow hover:border-brand-red px-4 py-2 rounded transition duration-300 text-sm font-medium" data-service="event-videography">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Card 2 -->
+                    <div class="service-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800 opacity-0 animate-fadeIn delay-200" style="opacity: 1;">
+                        <div class="p-8">
+                            <div class="service-icon bg-brand-yellow w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                                <i class="fas fa-film text-charcoal text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">Polished Highlight Reels</h3>
+                            <p class="text-gray-400 mb-6">Engaging video summaries that showcase the best moments of your events for maximum impact on social media.</p>
+                            <button class="learn-more bg-transparent hover:bg-brand-red text-brand-yellow hover:text-white border border-brand-yellow hover:border-brand-red px-4 py-2 rounded transition duration-300 text-sm font-medium" data-service="highlight-reels">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Card 3 -->
+                    <div class="service-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800 opacity-0 animate-fadeIn delay-300" style="opacity: 1;">
+                        <div class="p-8">
+                            <div class="service-icon bg-brand-yellow w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                                <i class="fas fa-microphone text-charcoal text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">Interviews &amp; Testimonials</h3>
+                            <p class="text-gray-400 mb-6">Professional interview capture and editing that showcases authentic voices and builds credibility.</p>
+                            <button class="learn-more bg-transparent hover:bg-brand-red text-brand-yellow hover:text-white border border-brand-yellow hover:border-brand-red px-4 py-2 rounded transition duration-300 text-sm font-medium" data-service="interviews">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Web Presence & Landing Pages -->
+            <div class="mb-16 service-category" data-category="website" style="display: block;">
+                <h2 class="text-2xl md:text-3xl font-bold mb-10 section-title">Web Presence &amp; Landing Pages</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Service Card 1 -->
+                    <div class="service-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800 opacity-0 animate-fadeIn delay-100" style="opacity: 1;">
+                        <div class="p-8">
+                            <div class="service-icon bg-brand-yellow w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                                <i class="fas fa-laptop-code text-charcoal text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">Conversion-Focused Landing Pages</h3>
+                            <p class="text-gray-400 mb-6">Professional web pages designed to turn visitors into customers with strategic layouts and compelling content.</p>
+                            <button class="learn-more bg-transparent hover:bg-brand-red text-brand-yellow hover:text-white border border-brand-yellow hover:border-brand-red px-4 py-2 rounded transition duration-300 text-sm font-medium" data-service="landing-pages">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Card 2 -->
+                    <div class="service-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800 opacity-0 animate-fadeIn delay-200" style="opacity: 1;">
+                        <div class="p-8">
+                            <div class="service-icon bg-brand-yellow w-16 h-16 rounded-full flex items-center justify-center mb-6">
+                                <i class="fas fa-photo-video text-charcoal text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold mb-3">Branded Video Backgrounds</h3>
+                            <p class="text-gray-400 mb-6">Eye-catching video elements that bring your website to life and create a memorable visitor experience.</p>
+                            <button class="learn-more bg-transparent hover:bg-brand-red text-brand-yellow hover:text-white border border-brand-yellow hover:border-brand-red px-4 py-2 rounded transition duration-300 text-sm font-medium" data-service="video-backgrounds">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Card 3 -->
+                    
+                </div>
+            </div>
+        </section>
+        
+        <!-- Modal -->
+        <div class="modal fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
+            <div class="modal-overlay absolute w-full h-full bg-black opacity-50"></div>
+            <div class="modal-container bg-gray-900 w-11/12 md:max-w-3xl mx-auto rounded-xl shadow-lg z-50 overflow-y-auto max-h-[90vh]">
+                <div class="modal-content p-6 md:p-8 text-left">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-2xl font-bold mb-4 text-white modal-title">Branded Graphic Templates</h3>
+                        <button class="modal-close text-gray-400 hover:text-white">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="modal-body mt-4">
+                    <div class="mb-6">
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">What We Can Deliver</h4>
+                        <p class="text-gray-300 mb-4">Our custom-designed graphics ensure your visual content maintains consistent branding while standing out in crowded social feeds. We create templates that your team can easily customize for ongoing content needs.</p>
+                        <ul class="list-disc pl-6 text-gray-300 space-y-2">
+                            <li>Set of 10-15 customizable social media templates</li>
+                            <li>Optimized sizes for each platform (Instagram, Facebook, LinkedIn, etc.)</li>
+                            <li>Custom color palettes and typography systems</li>
+                            <li>Training on how to customize templates for future use</li>
+                            <li>Quarterly template refreshes to keep content looking current</li>
+                        </ul>
+                    </div>
+                    <div class="mb-6">
+
+                    <div>
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">Pricing &amp; Timelines</h4>
+                        <p class="text-gray-300">Template packages start at $X,XXX for a complete set with instruction guides. Development typically takes 1-2 weeks from concept approval. Quarterly refreshes are available at a reduced rate to keep your content fresh.</p>
+                    </div>
+                </div></div>
+                    
+                    <div class="mt-8">
+                        <button class="bg-brand-red hover:bg-red-700 text-white font-medium py-2 px-6 rounded transition duration-300 contact-button">
+                            Get Started
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // Service details content
+        const serviceDetails = {
+            'content-strategy': {
+                title: 'Content Strategy & Calendars',
+                content: `
+                    <div class="mb-6">
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">What We Can Deliver</h4>
+                        <p class="text-gray-300 mb-4">Our strategic content planning service is designed to build your audience and drive meaningful engagement. We don't just create random posts—we develop a comprehensive content ecosystem that works together to achieve your business goals.</p>
+                        <ul class="list-disc pl-6 text-gray-300 space-y-2">
+                            <li>Audience analysis to identify content needs and preferences</li>
+                            <li>Brand voice and messaging framework development</li>
+                            <li>Monthly content calendars with strategic themes</li>
+                            <li>Content performance tracking and optimization</li>
+                            <li>Competitor analysis and differentiation strategy</li>
+                        </ul>
+                    </div>
+                    <div class="mb-6">
+            
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">Pricing & Timelines</h4>
+                        <p class="text-gray-300">Our content strategy packages start at $600 and typically take 2-3 weeks for initial development, followed by monthly updates and optimizations. Contact us for a customized quote based on your specific needs and goals.</p>
+                    </div>
+                `
+            },
+            'branded-templates': {
+                title: 'Branded Graphic Templates',
+                content: `
+                    <div class="mb-6">
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">What We Can Deliver</h4>
+                        <p class="text-gray-300 mb-4">Our custom-designed graphics ensure your visual content maintains consistent branding while standing out in crowded social feeds. We create templates that your team can easily customize for ongoing content needs.</p>
+                        <ul class="list-disc pl-6 text-gray-300 space-y-2">
+                            <li>Set of 10-15 customizable social media templates</li>
+                            <li>Optimized sizes for each platform (Instagram, Facebook, LinkedIn, etc.)</li>
+                            <li>Custom color palettes and typography systems</li>
+                            <li>Training on how to customize templates for future use</li>
+                            <li>Quarterly template refreshes to keep content looking current</li>
+                        </ul>
+                    </div>
+                    <div class="mb-6">
+
+                    <div>
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">Pricing & Timelines</h4>
+                        <p class="text-gray-300">Template packages start at $900 for a complete set with instruction guides. Development typically takes 1-2 weeks from concept approval. Quarterly refreshes are available at a reduced rate to keep your content fresh.</p>
+                    </div>
+                `
+            },
+            'short-form-video': {
+                title: 'Short-form Video Editing',
+                content: `
+                    <div class="mb-6">
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">What We Can Deliver</h4>
+                        <p class="text-gray-300 mb-4">Our professional editing transforms raw footage into attention-grabbing Reels, TikToks, and Stories that stop the scroll and boost engagement. We Utilize platform-specific best practices to maximize content performance.</p>
+                        <ul class="list-disc pl-6 text-gray-300 space-y-2">
+                            <li>Professional editing with dynamic transitions and pacing</li>
+                            <li>Trend-aware content that remains on-brand</li>
+                            <li>Text overlays and captions for accessibility</li>
+                            <li>Music selection and sound design</li>
+                      
+                        </ul>
+                    </div>
+                    <div class="mb-6">
+                        
+                    <div>
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">Pricing & Timelines</h4>
+                        <p class="text-gray-300">Short-form video packages start at $150 per video with discounts for monthly packages. Turnaround time is typically 2-4 business days depending on complexity. Rush delivery is available for time-sensitive content.</p>
+                    </div>
+                `
+            },
+            'video-ads': {
+                title: 'Video Ad Campaigns',
+                content: `
+                    <div class="mb-6">
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">What We Can Deliver</h4>
+                        <p class="text-gray-300 mb-4">Our video ads are strategically designed to showcase your products and encourage meaningful customer action. We focus on creating ads that look professional.</p>
+                        <ul class="list-disc pl-6 text-gray-300 space-y-2">
+                            <li>Full-service ad production from concept to delivery</li>
+                            <li>Multiple length variations for different platforms (6s, 15s, 30s)</li>
+                            <li>Attention-grabbing hooks optimized for conversion</li>
+                            <li>Clear call-to-action sequences</li>
+                    
+                        </ul>
+                    </div>
+                    <div class="mb-6">
+
+                    <div>
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">Pricing & Timelines</h4>
+                        <p class="text-gray-300">Video ad packages start at $2,000 including concept, production, and editing. Most campaigns take 2-3 weeks from kickoff to final delivery. Package pricing varies based on complexity and number of deliverables.</p>
+                    </div>
+                `
+            },
+            'motion-graphics': {
+                title: 'Motion Graphics & Explainers',
+                content: `
+                    <div class="mb-6">
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">What We Can Deliver</h4>
+                        <p class="text-gray-300 mb-4">Our animated visuals simplify complex ideas and make your brand message more memorable. Motion graphics are perfect for explaining products, services, or concepts in an engaging, visual way.</p>
+                        <ul class="list-disc pl-6 text-gray-300 space-y-2">
+                            <li>Custom animated graphics matching your brand identity</li>
+                            <li>Script development to simplify complex information</li>
+                            <li>Voiceover integration</li>
+                            <li>Sound design and background music</li>
+                            <li>Multiple formats for website, social media, and presentations</li>
+                        </ul>
+                    </div>
+                    <div class="mb-6">
+
+                    <div>
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">Pricing & Timelines</h4>
+                        <p class="text-gray-300">Motion graphics projects start at $1,500 with typical timelines of 3-4 weeks from concept approval to final delivery. Length, complexity, and style requirements are the primary pricing factors.</p>
+                    </div>
+                `
+            },
+            'scriptwriting': {
+                title: 'Script & Visual Storyboarding',
+                content: `
+                    <div class="mb-6">
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">What We Deliver</h4>
+                        <p class="text-gray-300 mb-4">Our strategic planning ensures your video content tells a compelling story that resonates with your audience. Well-crafted scripts and visual concepts are the foundation of effective video content.</p>
+                        <ul class="list-disc pl-6 text-gray-300 space-y-2">
+                            <li>Message-focused script development</li>
+                            <li>Scene-by-scene visual storyboarding & concept</li>
+                            <li>Shot lists and production planning</li>
+                            <li>Brand voice alignment and messaging consistency</li>
+                            <li>Feedback rounds and collaborative revision process</li>
+                        </ul>
+                    </div>
+                    <div class="mb-6">
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">Client Success Story</h4>
+                        <p class="text-gray-300">A non-profit organization used our scriptwriting service for their annual fundraising video, resulting in a 35% increase in donations compared to previous years. The structured narrative helped viewers connect emotionally with their cause.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">Pricing & Timelines</h4>
+                        <p class="text-gray-300">Script and storyboard packages start at $XXX for short-form content and $X,XXX for longer productions. Most projects are completed within 1-2 weeks depending on complexity and revision rounds.</p>
+                    </div>
+                `
+            },
+            'event-videography': {
+                title: 'Cinematic Event Coverage',
+                content: `
+                    <div class="mb-6">
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">What We Can Deliver</h4>
+                        <p class="text-gray-300 mb-4">Our professional ground and aerial videography captures the atmosphere and highlights of your events with cinematic quality that impresses viewers and preserves your important moments.</p>
+                        <ul class="list-disc pl-6 text-gray-300 space-y-2">
+                            <li>Multi-camera coverage of key moments</li>
+                            <li>Drone aerial footage for establishing shots</li>
+                            <li>Lighting and audio capture</li>
+                            <li>Candid audience reactions and environment shots</li>
+                            <li>Quick turnaround options for social media sharing</li>
+                        </ul>
+                    </div>
+                    <div class="mb-6">
+                    
+                    <div>
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">Pricing & Timelines</h4>
+                        <p class="text-gray-300">Event coverage packages vary in pricing based on event duration, crew size, and equipment needs. Highlight reels can typically be delivered within 1-2 weeks, with expedited options available for additional fee.</p>
+                    </div>
+                `
+            },
+            'highlight-reels': {
+                title: 'Polished Highlight Reels',
+                content: `
+                    <div class="mb-6">
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">What We Can Deliver</h4>
+                        <p class="text-gray-300 mb-4">Our engaging video summaries showcase the best moments of your events with professional editing that maximizes impact on social media and leaves a lasting impression on viewers.</p>
+                        <ul class="list-disc pl-6 text-gray-300 space-y-2">
+                            <li>Dynamic editing with music synchronization</li>
+                            <li>Color grading for cinematic look</li>
+                            <li>Strategic narrative structure that builds engagement</li>
+                            <li>Multiple length versions for different platforms</li>
+                            <li>Motion graphics and branded elements</li>
+                        </ul>
+                    </div>
+                    <div class="mb-6">
+                     
+                    <div>
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">Pricing & Timelines</h4>
+                        <p class="text-gray-300">Highlight reel production pricing varies combined with our event coverage service. Standalone editing from client-provided footage starts at $150 a video. Most projects are completed within 1-2 weeks of footage capture.</p>
+                    </div>
+                `
+            },
+            'interviews': {
+                title: 'Interviews & Testimonials',
+                content: `
+                    <div class="mb-6">
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">What We Deliver</h4>
+                        <p class="text-gray-300 mb-4">Our professional interview capture and editing showcases authentic voices that build credibility for your brand. We specialize in making subjects comfortable to deliver natural, compelling testimonials.</p>
+                        <ul class="list-disc pl-6 text-gray-300 space-y-2">
+                            <li>Professional interview setup with optimal lighting and audio</li>
+                            <li>Pre-interview coaching to ensure quality responses</li>
+                            <li>Multiple camera angles for dynamic editing</li>
+                            <li>B-roll integration to illustrate key points</li>
+                            <li>Branded graphics and lower thirds</li>
+                        </ul>
+                    </div>
+                    <div class="mb-6">
+                       
+                    <div>
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">Pricing & Timelines</h4>
+                        <p class="text-gray-300">Interview packages start at $XXX per subject with discounts for multiple interviews in a single session. Production typically takes 1-2 weeks from filming to final delivery, depending on the number of interviews and complexity.</p>
+                    </div>
+                `
+            },
+            'landing-pages': {
+                title: 'Conversion-Focused Landing Pages',
+                content: `
+                    <div class="mb-6">
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">What We Can Deliver</h4>
+                        <p class="text-gray-300 mb-4">Our professional web pages are designed to turn visitors into customers with strategic layouts and compelling content that guides users toward meaningful action.</p>
+                        <ul class="list-disc pl-6 text-gray-300 space-y-2">
+                            <li>Custom design aligned with your brand identity</li>
+                            <li>Conversion-optimized page structure and flow</li>
+                            <li>Mobile-responsive layouts that work on all devices</li>
+                            <li>Strategic placement of calls-to-action</li>
+                            <li>Integration with your existing systems and analytics</li>
+                        </ul>
+                    </div>
+                    <div class="mb-6">
+                       
+                    <div>
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">Pricing & Timelines</h4>
+                        <p class="text-gray-300">Landing page design and development starts at $X,XXX with typical timelines of 2-3 weeks from concept approval to launch. Complex functionality or e-commerce integration may require additional time and investment.</p>
+                    </div>
+                `
+            },
+            'video-backgrounds': {
+                title: 'Branded Video Backgrounds',
+                content: `
+                    <div class="mb-6">
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">What We Can Deliver</h4>
+                        <p class="text-gray-300 mb-4">Our eye-catching video elements bring your website to life and create a memorable visitor experience that makes your digital presence stand out from competitors.</p>
+                        <ul class="list-disc pl-6 text-gray-300 space-y-2">
+                            <li>Custom-filmed or animated video backgrounds</li>
+                            <li>Performance-optimized file formats</li>
+                            <li>Mobile-friendly alternatives for smaller devices</li>
+                            <li>Seamless looping for continuous playback</li>
+                            <li>Integration support for your website platform</li>
+                        </ul>
+                    </div>
+                 
+                    <div>
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">Pricing & Timelines</h4>
+                        <p class="text-gray-300">Video background packages start at $XXX for simple animations and $X,XXX for custom filmed content. Most projects are delivered within 1-2 weeks depending on complexity and filming requirements.</p>
+                    </div>
+                `
+            },
+            'copywriting': {
+                title: 'Strategic Copywriting',
+                content: `
+                    <div class="mb-6">
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">What We Deliver</h4>
+                        <p class="text-gray-300 mb-4">Our compelling website text communicates your value and persuades visitors to take action. We focus on clear messaging that connects with your audience and drives conversions.</p>
+                        <ul class="list-disc pl-6 text-gray-300 space-y-2">
+                            <li>Conversion-focused page copy that sells your value</li>
+                            <li>SEO-optimized text to improve search visibility</li>
+                            <li>Clear calls-to-action that drive user behavior</li>
+                            <li>Brand voice consistency across all pages</li>
+                            <li>Multiple revision rounds to perfect messaging</li>
+                        </ul>
+                    </div>
+                    <div class="mb-6">
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">Client Success Story</h4>
+                        <p class="text-gray-300">After revising the copy on a client's product pages, their e-commerce store saw a 32% increase in conversion rate and a 17% increase in average order value. Clear benefit statements and more persuasive product descriptions drove the improvement.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-semibold mb-3 text-brand-yellow">Pricing & Timelines</h4>
+                        <p class="text-gray-300">Copywriting services start at $XXX per page with package discounts for full website projects. Most projects are delivered within 1-2 weeks, including research and revision rounds.</p>
+                    </div>
+                `
+            }
+        };
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show all cards initially
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.style.opacity = '1';
+            });
+            
+            // Filter button functionality
+            const filterButtons = document.querySelectorAll('.filter-button');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Show all categories if filter is 'all'
+                    if (filter === 'all') {
+                        document.querySelectorAll('.service-category').forEach(category => {
+                            category.style.display = 'block';
+                        });
+                    } else {
+                        // Hide all categories first
+                        document.querySelectorAll('.service-category').forEach(category => {
+                            category.style.display = 'none';
+                        });
+                        
+                        // Show only categories that match the filter
+                        document.querySelectorAll(`.service-category[data-category="${filter}"]`).forEach(category => {
+                            category.style.display = 'block';
+                        });
+                    }
+                    
+                    // Reset animation for cards
+                    document.querySelectorAll('.service-card').forEach((card, index) => {
+                        card.style.opacity = '0';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                        }, 100 * index);
+                    });
+                });
+            });
+            
+            // Modal functionality
+            const modal = document.querySelector('.modal');
+            const modalTitle = document.querySelector('.modal-title');
+            const modalBody = document.querySelector('.modal-body');
+            const modalClose = document.querySelector('.modal-close');
+            const modalOverlay = document.querySelector('.modal-overlay');
+            
+            // Open modal when Learn More is clicked
+            document.querySelectorAll('.learn-more').forEach(button => {
+                button.addEventListener('click', function() {
+                    const serviceId = this.getAttribute('data-service');
+                    const serviceDetail = serviceDetails[serviceId];
+                    
+                    modalTitle.textContent = serviceDetail.title;
+                    modalBody.innerHTML = serviceDetail.content;
+                    
+                    modal.classList.add('modal-visible');
+                    document.body.style.overflow = 'hidden';
+                    modal.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                });
+            });
+            
+            // Close modal
+            function closeModal() {
+                modal.classList.remove('modal-visible');
+                document.body.style.overflow = 'auto';
+            }
+            
+            modalClose.addEventListener('click', closeModal);
+            modalOverlay.addEventListener('click', closeModal);
+            
+            // Close modal on escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.classList.contains('modal-visible')) {
+                    closeModal();
+                }
+            });
+            
+            // Contact button
+            document.querySelector('.contact-button').addEventListener('click', function() {
+                // You can replace this with actual contact form functionality
+                alert('Contact form or booking page would open here');
+                closeModal();
+            });
+        });
+    </script>
+
+</body></html>
